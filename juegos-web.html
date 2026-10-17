@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='red' font-family='Arial' font-weight='bold'>O</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimati - Juegos Web</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a1a; color: #eee; font-family: 'Segoe UI', Arial, sans-serif; }
+
+    .navbar { background: #111128; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #ff4444; }
+    .navbar .logo { font-size: 24px; font-weight: bold; color: #ff4444; text-decoration: none; }
+    .navbar .logo span { color: #fff; }
+    .navbar .links { display: flex; gap: 15px; }
+    .navbar .links a { color: #ccc; text-decoration: none; font-size: 14px; padding: 8px 16px; border-radius: 6px; transition: 0.2s; }
+    .navbar .links a:hover { background: #1a1a3e; color: #fff; }
+    .navbar .links a.active { background: #ff4444; color: #fff; }
+
+    .hero { text-align: center; padding: 40px 20px 20px; }
+    .hero h1 { font-size: 36px; color: #fff; }
+    .hero h1 span { color: #ff4444; }
+    .hero p { color: #888; margin-top: 8px; font-size: 16px; }
+
+    .categorias { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
+    .cat-btn { background: #1a1a3e; border: 1px solid #333; color: #ccc; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: 0.2s; }
+    .cat-btn:hover, .cat-btn.active { background: #ff4444; color: #fff; border-color: #ff4444; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px 30px 40px; max-width: 1200px; margin: 0 auto; }
+    .card { background: #111128; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.2s; }
+    .card:hover { border-color: #ff4444; transform: translateY(-3px); }
+    .card-img { height: 140px; background: #1a1a3e; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+    .card-body { padding: 16px; }
+    .card-body h3 { color: #fff; font-size: 18px; margin-bottom: 6px; }
+    .card-body .desc { color: #888; font-size: 13px; margin-bottom: 10px; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag { background: #1a1a3e; color: #aaa; padding: 3px 10px; border-radius: 10px; font-size: 11px; }
+    .tag.fps { background: #1a3a2a; color: #4ade80; }
+    .tag.online { background: #1a2a3a; color: #60a5fa; }
+    .tag.free { background: #2a2a1a; color: #facc15; }
+    .btn { display: block; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; background: #ff4444; color: #fff; transition: 0.2s; }
+    .btn:hover { background: #cc2222; }
+
+    .footer { text-align: center; padding: 30px; color: #555; font-size: 13px; border-top: 1px solid #1a1a2e; margin-top: 20px; }
+
+    @media (max-width: 600px) {
+      .navbar { flex-direction: column; gap: 10px; }
+      .grid { padding: 15px; }
+      .hero h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">Opti<span>mati</span></a>
+    <div class="links">
+      <a href="index.html">Descargas</a>
+      <a href="juegos-web.html" class="active">Juegos Web</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>🌐 Juegos <span>Web</span></h1>
+    <p>Juega sin instalar nada | Solo abre el link y juega</p>
+  </div>
+
+  <div class="categorias">
+    <button class="cat-btn active" onclick="filtrar('todos')">Todos</button>
+    <button class="cat-btn" onclick="filtrar('accion')">Acción</button>
+    <button class="cat-btn" onclick="filtrar('fps')">FPS</button>
+    <button class="cat-btn" onclick="filtrar('carreras')">Carreras</button>
+    <button class="cat-btn" onclick="filtrar('mundo')">Mundo Abierto</button>
+    <button class="cat-btn" onclick="filtrar('futbol')">Fútbol</button>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <div class="card" data-cat="mundo">
+      <div class="card-img">🌆</div>
+      <div class="card-body">
+        <h3>GTA Vice City</h3>
+        <p class="desc">Miami 1986. Misiones, autos, radio. El GTA clásico.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://joncodeofficial.github.io/gta-vice-city-wasm" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="mundo">
+      <div class="card-img">🏙️</div>
+      <div class="card-body">
+        <h3>GTA III</h3>
+        <p class="desc">Liberty City. El original. Mundo abierto.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://wasmarcade.com" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="accion">
+      <div class="card-img">🍌</div>
+      <div class="card-body">
+        <h3>The Simpsons: Hit & Run</h3>
+        <p class="desc">Springfield + autos + misiones. Muy divertido.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://shar-wasm.cjoseph.workers.dev/?skipmovie" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="fps">
+      <div class="card-img">🔫</div>
+      <div class="card-body">
+        <h3>CS 1.6 (Combat Skirmish)</h3>
+        <p class="desc">Dust2, Inferno, Office. Multiplayer online.</p>
+        <div class="card-tags">
+          <span class="tag fps">60+ FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://combatskirmish.net" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="fps">
+      <div class="card-img">🧟</div>
+      <div class="card-body">
+        <h3>Black Ops Zombies</h3>
+        <p class="desc">Kino der Toten, Moon, etc. Todos los mapas de BO1.</p>
+        <div class="card-tags">
+          <span class="tag fps">25-40 FPS</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://vel.gg/bo1z" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="fps">
+      <div class="card-img">🎯</div>
+      <div class="card-body">
+        <h3>Krunker.io</h3>
+        <p class="desc">FPS 3D, ranked, slide-hop. Comunidad enorme.</p>
+        <div class="card-tags">
+          <span class="tag fps">60 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://krunker.io" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="fps">
+      <div class="card-img">⚡</div>
+      <div class="card-body">
+        <h3>Venge.io</h3>
+        <p class="desc">"El Valorant del navegador." Habilidades, gunplay, táctico.</p>
+        <div class="card-tags">
+          <span class="tag fps">60 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://venge.io" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="carreras">
+      <div class="card-img">🏎️</div>
+      <div class="card-body">
+        <h3>Drift Hunters</h3>
+        <p class="desc">Drift + tuning. Muy fluido, 3D real.</p>
+        <div class="card-tags">
+          <span class="tag fps">60 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://gamulo.com" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="carreras">
+      <div class="card-img">🚗</div>
+      <div class="card-body">
+        <h3>Madalin Stunt Cars 3</h3>
+        <p class="desc">Mundo abierto, rampas, stunts, supercars.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://madalin.cars" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="futbol">
+      <div class="card-img">⚽</div>
+      <div class="card-body">
+        <h3>PES 6</h3>
+        <p class="desc">Fútbol completo. 60 FPS, online, option files.</p>
+        <div class="card-tags">
+          <span class="tag fps">60 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://pes6.optijuegos.net" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="futbol">
+      <div class="card-img">🏃</div>
+      <div class="card-body">
+        <h3>FIFA Street 2</h3>
+        <p class="desc">Fútbol callejero 3v3. Trucos, online multiplayer.</p>
+        <div class="card-tags">
+          <span class="tag fps">30-50 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://fifastreet2.fun" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+    <div class="card" data-cat="mundo">
+      <div class="card-img">🐉</div>
+      <div class="card-body">
+        <h3>Dragon Ball Z: BT3</h3>
+        <p class="desc">Lucha anime. 1v1 online. Todos los personajes.</p>
+        <div class="card-tags">
+          <span class="tag fps">30-50 FPS</span>
+          <span class="tag online">Online</span>
+          <span class="tag free">Gratis</span>
+        </div>
+        <a class="btn" href="https://dragonballbt3.online" target="_blank">Jugar</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p><strong>Optimati</strong> | Hecho por un gamer de PC de gama baja 🇨🇱</p>
+    <p>PC de prueba: HP 240 G7 | i3-1005G1 | 4GB RAM | Intel UHD G1</p>
+  </div>
+
+  <script>
+    function filtrar(cat) {
+      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      event.target.classList.add('active');
+      document.querySelectorAll('.card').forEach(function(c) {
+        c.style.display = (cat === 'todos' || c.dataset.cat === cat) ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>   
