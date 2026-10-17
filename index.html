@@ -1,44 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='red' font-family='Arial' font-weight='bold'>O</text></svg>">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Optimati</title>
   <style>
-    body { background: #0f0f1a; color: #eee; font-family: Arial; margin: 0; padding: 20px; }
-    h1 { color: #ff4444; text-align: center; }
-    .subtitulo { text-align: center; color: #aaa; margin-bottom: 30px; }
-    .juego { background: #1a1a2e; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 4px solid #ff4444; }
-    .juego h2 { margin: 0 0 10px 0; color: #fff; }
-    .info { color: #888; font-size: 14px; }
-    .btn { display: inline-block; background: #ff4444; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 10px; }
-    .btn:hover { background: #cc2222; }
-    .footer { text-align: center; color: #555; margin-top: 40px; font-size: 12px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a1a; color: #eee; font-family: 'Segoe UI', Arial, sans-serif; }
+
+    /* NAVBAR */
+    .navbar { background: #111128; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #ff4444; }
+    .navbar .logo { font-size: 24px; font-weight: bold; color: #ff4444; }
+    .navbar .logo span { color: #fff; }
+    .navbar .search { background: #1a1a3e; border: 1px solid #333; border-radius: 20px; padding: 8px 16px; color: #fff; width: 250px; outline: none; }
+    .navbar .search:focus { border-color: #ff4444; }
+
+    /* HERO */
+    .hero { text-align: center; padding: 40px 20px 20px; }
+    .hero h1 { font-size: 36px; color: #fff; }
+    .hero h1 span { color: #ff4444; }
+    .hero p { color: #888; margin-top: 8px; font-size: 16px; }
+
+    /* CATEGORIAS */
+    .categorias { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
+    .cat-btn { background: #1a1a3e; border: 1px solid #333; color: #ccc; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: 0.2s; }
+    .cat-btn:hover, .cat-btn.active { background: #ff4444; color: #fff; border-color: #ff4444; }
+
+    /* GRID DE JUEGOS */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px 30px 40px; max-width: 1200px; margin: 0 auto; }
+    .card { background: #111128; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.2s; }
+    .card:hover { border-color: #ff4444; transform: translateY(-3px); }
+    .card-img { height: 140px; background: #1a1a3e; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+    .card-body { padding: 16px; }
+    .card-body h3 { color: #fff; font-size: 18px; margin-bottom: 6px; }
+    .card-body .desc { color: #888; font-size: 13px; margin-bottom: 10px; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag { background: #1a1a3e; color: #aaa; padding: 3px 10px; border-radius: 10px; font-size: 11px; }
+    .tag.fps { background: #1a3a2a; color: #4ade80; }
+    .tag.size { background: #1a2a3a; color: #60a5fa; }
+    .tag.dx { background: #2a1a3a; color: #c084fc; }
+    .card-btns { display: flex; gap: 8px; }
+    .btn { flex: 1; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.2s; }
+    .btn-primary { background: #ff4444; color: #fff; }
+    .btn-primary:hover { background: #cc2222; }
+    .btn-secondary { background: #1a1a3e; color: #ccc; border: 1px solid #333; }
+    .btn-secondary:hover { background: #2a2a4e; }
+
+    /* FOOTER */
+    .footer { text-align: center; padding: 30px; color: #555; font-size: 13px; border-top: 1px solid #1a1a2e; margin-top: 20px; }
+    .footer a { color: #ff4444; text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .navbar { flex-direction: column; gap: 10px; }
+      .navbar .search { width: 100%; }
+      .grid { padding: 15px; }
+      .hero h1 { font-size: 26px; }
+    }
   </style>
 </head>
 <body>
-  <h1>🎮 Optimati</h1>
-  <p class="subtitulo">Juegos optimizados para PC de gama baja</p>
 
-  <div class="juego">
-    <h2>FIFA 14</h2>
-    <p class="info">FPS: 60-100 | Tamaño: 6 GB | DirectX 9</p>
-    <a class="btn" href=>https://www.mediafire.com/file/c5e5ryikqiu36c9/FIFA_14_Opti_V2.1.7z/fileDescargar</a>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Opti<span>mati</span></div>
+    <input type="text" class="search" placeholder="Buscar juego..." id="buscador" onkeyup="buscar()">
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>🎮 Optimati</h1>
+    <p>Juegos optimizados para PC de gama baja | Probados en HP 240 G7 (i3 10th gen, 4GB RAM)</p>
   </div>
 
-  <div class="juego">
-    <h2>Burnout Paradise</h2>
-    <p class="info">FPS: 50-60 | Tamaño: 4 GB | DirectX 9</p>
-    <a class="btn" href="AQUI_TU_LINK">Descargar</a>
+  <!-- CATEGORIAS -->
+  <div class="categorias">
+    <button class="cat-btn active" onclick="filtrar('todos')">Todos</button>
+    <button class="cat-btn" onclick="filtrar('accion')">Acción</button>
+    <button class="cat-btn" onclick="filtrar('carreras')">Carreras</button>
+    <button class="cat-btn" onclick="filtrar('futbol')">Fútbol</button>
+    <button class="cat-btn" onclick="filtrar('mundo')">Mundo Abierto</button>
+    <button class="cat-btn" onclick="filtrar('fps')">FPS</button>
   </div>
 
-  <div class="juego">
-    <h2>Resident Evil 4</h2>
-    <p class="info">FPS: 30-40 | Tamaño: 5 GB | DirectX 9</p>
-    <a class="btn" href="AQUI_TU_LINK">Descargar</a>
+  <!-- GRID DE JUEGOS -->
+  <div class="grid" id="grid">
+
+    <div class="card" data-cat="futbol">
+      <div class="card-img">⚽</div>
+      <div class="card-body">
+        <h3>FIFA 14</h3>
+        <p class="desc">El rey de los PCs de gama baja. DX9, va a volar.</p>
+        <div class="card-tags">
+          <span class="tag fps">60-100 FPS</span>
+          <span class="tag size">6 GB</span>
+          <span class="tag dx">DX9</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href=https://www.mediafire.com/file/c5e5ryikqiu36c9/FIFA_14_Opti_V2.1.7z/file>Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="carreras">
+      <div class="card-img">🏎️</div>
+      <div class="card-body">
+        <h3>Burnout Paradise</h3>
+        <p class="desc">Mundo abierto + velocidad + stunts. El Forza Horizon de PC baja.</p>
+        <div class="card-tags">
+          <span class="tag fps">50-60 FPS</span>
+          <span class="tag size">4 GB</span>
+          <span class="tag dx">DX9</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href="AQUI_TU_LINK">Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="accion">
+      <div class="card-img">🔫</div>
+      <div class="card-body">
+        <h3>Resident Evil 4</h3>
+        <p class="desc">Acción + terror + historia. Un clásico que va bien en iGPU.</p>
+        <div class="card-tags">
+          <span class="tag fps">30-40 FPS</span>
+          <span class="tag size">5 GB</span>
+          <span class="tag dx">DX9</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href="AQUI_TU_LINK">Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="mundo">
+      <div class="card-img">🗡️</div>
+      <div class="card-body">
+        <h3>Assassin's Creed Brotherhood</h3>
+        <p class="desc">Roma + sigilo + mundo abierto. 60 FPS en PC baja.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag size">8 GB</span>
+          <span class="tag dx">DX10</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href="AQUI_TU_LINK">Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="fps">
+      <div class="card-img">💥</div>
+      <div class="card-body">
+        <h3>Borderlands 2</h3>
+        <p class="desc">FPS + humor + co-op + miles de armas. Muy adictivo.</p>
+        <div class="card-tags">
+          <span class="tag fps">40-60 FPS</span>
+          <span class="tag size">10 GB</span>
+          <span class="tag dx">DX11</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href="AQUI_TU_LINK">Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="carreras">
+      <div class="card-img">🚗</div>
+      <div class="card-body">
+        <h3>NFS Underground 2</h3>
+        <p class="desc">Carreras + tuning + persecuciones. Muy optimizado.</p>
+        <div class="card-tags">
+          <span class="tag fps">45-60 FPS</span>
+          <span class="tag size">5 GB</span>
+          <span class="tag dx">DX9</span>
+        </div>
+        <div class="card-btns">
+          <a class="btn btn-primary" href="AQUI_TU_LINK">Descargar</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <p class="footer">Optimati | PC: HP 240 G7 | i3 10th gen | 4GB RAM</p>
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>Optimati</strong> | Hecho por un gamer de PC de gama baja 🇨🇱</p>
+    <p>PC de prueba: HP 240 G7 | i3-1005G1 | 4GB RAM | Intel UHD G1 | 1TB HDD</p>
+    <p style="margin-top:10px;">Juegos optimizados por <a href="https://optijuegos.github.io">OptiJuegos</a>. Solo los redistribuyo.</p>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    function buscar() {
+      var q = document.getElementById('buscador').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(function(c) {
+        c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+    function filtrar(cat) {
+      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      event.target.classList.add('active');
+      document.querySelectorAll('.card').forEach(function(c) {
+        c.style.display = (cat === 'todos' || c.dataset.cat === cat) ? '' : 'none';
+      });
+    }
+  </script>
+
 </body>
 </html>   
